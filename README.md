@@ -51,13 +51,6 @@ msg = Protocol.cmd_join("#general")
 # Encode for network transmission
 data = Protocol.encode(msg)  # Returns bytes ending in \n
 
-# Send over socket
-sock.sendall(data)
-
-# Receive and decode
-line = sock.recv(4096)  # Read until \n
-msg = Protocol.decode(line)
-
 # Check message type
 if msg.type == MessageType.RESPONSE:
     if msg.data.get("status") == "ok":
