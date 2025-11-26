@@ -170,43 +170,6 @@ decoded = Protocol.decode(encoded)
 assert decoded.name == "join"
 assert decoded.data["channel"] == "#test"
 ```
-
-## Integration
-
-### Server Side
-```python
-def handle_client(sock):
-    buffer = b''
-    while True:
-        chunk = sock.recv(4096)
-        if not chunk:
-            break
-        buffer += chunk
-        
-        while b'\n' in buffer:
-            line, buffer = buffer.split(b'\n', 1)
-            msg = Protocol.decode(line)
-            
-            if msg.name == "join":
-                # Handle join command
-                response = Protocol.resp_ok("join")
-                sock.sendall(Protocol.encode(response))
-```
-
-### Client Side
-```python
-def send_command(sock, msg):
-    sock.sendall(Protocol.encode(msg))
-
-def receive_message(sock, buffer=b''):
-    while b'\n' not in buffer:
-        chunk = sock.recv(4096)
-        if not chunk:
-            return None, buffer
-        buffer += chunk
-    
-    line, buffer = buffer.split(b'\n', 1)
-    return Protocol.decode(line), buffer
 ```
 
 ## License
