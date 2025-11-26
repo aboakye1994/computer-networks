@@ -174,4 +174,4 @@ assert decoded.data["channel"] == "#test"
 
 ## License
 
-Created for CSC4220/6220 Computer Networks Team Project.
+Created for CSC4220 Computer Networks Team Project.
