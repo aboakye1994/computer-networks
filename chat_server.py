@@ -155,20 +155,24 @@ class ChatServer:
                 return
             
             # Route to command handlers
-            if msg.name == CommandName.NICK:
+            if msg.name == CommandName.NICK.value:
                 self._handle_nick(client_socket, msg)
-            elif msg.name == CommandName.LIST:
+            elif msg.name == CommandName.LIST.value:
                 self._handle_list(client_socket, msg)
-            elif msg.name == CommandName.JOIN:
+            elif msg.name == CommandName.JOIN.value:
                 self._handle_join(client_socket, msg)
-            elif msg.name == CommandName.LEAVE:
+            elif msg.name == CommandName.LEAVE.value:
                 self._handle_leave(client_socket, msg)
-            elif msg.name == CommandName.MSG:
+            elif msg.name == CommandName.MSG.value:
                 self._handle_msg(client_socket, msg)
-            elif msg.name == CommandName.HELP:
+            elif msg.name == CommandName.HELP.value:
                 self._handle_help(client_socket, msg)
-            elif msg.name == CommandName.QUIT:
+            elif msg.name == CommandName.QUIT.value:
                 self._handle_quit(client_socket, msg)
+            elif msg.name == CommandName.CONNECT.value:
+                # Important: handle /connect (even though client already does TCP connect)
+                # Returning resp_connected is valid
+                return
             else:
                 self._send_error(client_socket, msg.name, "Unknown command")
         
